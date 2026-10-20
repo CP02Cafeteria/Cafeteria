@@ -1,16 +1,23 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Cafeteria.Servicos;
 
 namespace Cafeteria
 {
     public class FrmMenuPrincipal : Form
     {
-        public FrmMenuPrincipal()
+        private ServicoVendas servicoVendas;
+        private ServicoProdutos servicoProdutos;
+
+        public FrmMenuPrincipal(ServicoVendas servicoVendas, ServicoProdutos servicoProdutos)
         {
+            this.servicoVendas = servicoVendas;
+            this.servicoProdutos = servicoProdutos;
+
             // Configurações da janela
             Text = "Cafeteria Dev - Menu Principal";
-            Size = new Size(500, 450);
+            Size = new Size(500, 530);
             StartPosition = FormStartPosition.CenterScreen;
             BackColor = Color.FromArgb(40, 40, 40);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -37,11 +44,23 @@ namespace Cafeteria
             btnNovaVenda.FlatAppearance.BorderSize = 0;
             btnNovaVenda.Cursor = Cursors.Hand;
 
+            // Botão Relatório de Vendas
+            Button btnRelatorioVendas = new Button();
+            btnRelatorioVendas.Text = "Relatório de Vendas";
+            btnRelatorioVendas.Size = new Size(250, 50);
+            btnRelatorioVendas.Location = new Point(115, 200);
+            btnRelatorioVendas.BackColor = Color.SaddleBrown;
+            btnRelatorioVendas.ForeColor = Color.White;
+            btnRelatorioVendas.Font = new Font("Arial", 12);
+            btnRelatorioVendas.FlatStyle = FlatStyle.Flat;
+            btnRelatorioVendas.FlatAppearance.BorderSize = 0;
+            btnRelatorioVendas.Cursor = Cursors.Hand;
+
             // Botão Cardápio
             Button btnCardapio = new Button();
             btnCardapio.Text = "Cardápio";
             btnCardapio.Size = new Size(250, 50);
-            btnCardapio.Location = new Point(115, 200);
+            btnCardapio.Location = new Point(115, 270);
             btnCardapio.BackColor = Color.SaddleBrown;
             btnCardapio.ForeColor = Color.White;
             btnCardapio.Font = new Font("Arial", 12);
@@ -53,7 +72,7 @@ namespace Cafeteria
             Button btnSair = new Button();
             btnSair.Text = "Sair";
             btnSair.Size = new Size(250, 50);
-            btnSair.Location = new Point(115, 270);
+            btnSair.Location = new Point(115, 340);
             btnSair.BackColor = Color.DarkRed;
             btnSair.ForeColor = Color.White;
             btnSair.Font = new Font("Arial", 12);
@@ -64,10 +83,17 @@ namespace Cafeteria
             // Evento: Nova Venda
             btnNovaVenda.Click += (sender, e) =>
             {
-                using (FrmVenda telaVenda = new FrmVenda())
-                {
-                    telaVenda.ShowDialog(this);
-                }
+                FrmVenda telaVenda = new FrmVenda(servicoVendas, servicoProdutos);
+                telaVenda.ConfigurarInterface();
+                telaVenda.ShowDialog(this);
+            };
+
+            // Evento: Relatório de Vendas
+            btnRelatorioVendas.Click += (sender, e) =>
+            {
+                FrmRelatorioVendas telaRelatorio = new FrmRelatorioVendas(servicoVendas);
+                telaRelatorio.ConfigurarInterface();
+                telaRelatorio.ShowDialog(this);
             };
 
             // Evento: Cardápio
@@ -90,6 +116,7 @@ namespace Cafeteria
             // Adiciona os controles à janela
             Controls.Add(lblTitulo);
             Controls.Add(btnNovaVenda);
+            Controls.Add(btnRelatorioVendas);
             Controls.Add(btnCardapio);
             Controls.Add(btnSair);
         }
