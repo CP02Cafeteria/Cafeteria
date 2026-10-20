@@ -99,12 +99,10 @@ namespace Cafeteria
             // Evento: Cardápio
             btnCardapio.Click += (sender, e) =>
             {
-                MessageBox.Show(
-                    "Tela do cardápio ainda não foi implementada.",
-                    "Cardápio",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                using (FrmCardapio telaCardapio = new FrmCardapio())
+                {
+                    telaCardapio.ShowDialog(this);
+                }
             };
 
             // Evento: Sair
