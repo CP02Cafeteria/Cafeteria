@@ -11,12 +11,17 @@ namespace Cafeteria
         {
             ApplicationConfiguration.Initialize();
 
-            // Criar instâncias dos serviços (Singleton para compartilhar dados)
+            using (FrmSplash splash = new FrmSplash())
+            {
+                splash.ShowDialog();
+            }
+
             var servicoProdutos = new ServicoProdutos();
             var servicoVendas = new ServicoVendas();
 
-            // Executar aplicação passando os serviços
-            Application.Run(new FrmMenuPrincipal(servicoVendas, servicoProdutos));
+            Application.Run(
+                new FrmMenuPrincipal(servicoVendas, servicoProdutos)
+            );
         }
     }
 }
