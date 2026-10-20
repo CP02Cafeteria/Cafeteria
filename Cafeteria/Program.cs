@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using Cafeteria.Servicos;
 
 namespace Cafeteria
 {
@@ -10,7 +11,12 @@ namespace Cafeteria
         {
             ApplicationConfiguration.Initialize();
 
-            Application.Run(new FrmMenuPrincipal());
+            // Criar instâncias dos serviços (Singleton para compartilhar dados)
+            var servicoProdutos = new ServicoProdutos();
+            var servicoVendas = new ServicoVendas();
+
+            // Executar aplicação passando os serviços
+            Application.Run(new FrmMenuPrincipal(servicoVendas, servicoProdutos));
         }
     }
 }
